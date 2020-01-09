@@ -1,5 +1,8 @@
 # Simple Verlet Integration
 
+![](./verlet.gif)
+
+
 ## verlet integration
 
 https://en.wikipedia.org/wiki/Verlet_integration
