@@ -18,9 +18,11 @@ public class Verlet2D : MonoBehaviour{
 
     private VerletPoint[,] _points2D;
 
+    [SerializeField] private bool _isMove=false;
+
     void Start(){
 
-        _mesh = MeshUtil.CloneMesh(_mesh,_mesh.name+"clone",Vector3.one);
+        _mesh = MeshUtil.CloneMesh(_mesh,_mesh.name+"clone",Vector3.one*3f);
         _meshFilter.sharedMesh=_mesh;
 
         _balls = new List<GameObject>();
@@ -88,7 +90,7 @@ public class Verlet2D : MonoBehaviour{
                     _points2D[ ax,ay ].position,
                     _points2D[ bx,by ].position
                 ),
-                0.3f
+                0.1f
             );
             _sticks.Add( s );
 
@@ -104,7 +106,16 @@ public class Verlet2D : MonoBehaviour{
         screenToWorldPointPosition.z = 0;
 
         var tgt = screenToWorldPointPosition;
-        _points[0].position = tgt;
+
+        if(_isMove){
+
+            _points[0].position = new Vector3(
+                Mathf.Sin(3f*Time.time),
+                Mathf.Cos(2f*Time.time),
+                Mathf.Sin(Time.time*0.5f)
+            );
+
+        }
 
         for(int i=0;i<_points.Count;i++){
             _points[i].Update();
@@ -121,6 +132,7 @@ public class Verlet2D : MonoBehaviour{
             verts[i] = _points[i].position;
         }
         _mesh.vertices=verts;
+        _mesh.RecalculateNormals();
 
     }
 

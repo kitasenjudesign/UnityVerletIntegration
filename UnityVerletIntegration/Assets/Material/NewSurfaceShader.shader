@@ -12,7 +12,7 @@ Shader "Custom/NewSurfaceShader"
         Tags { "RenderType"="Opaque" }
         LOD 200
         cull off
-        
+
         CGPROGRAM
         // Physically based Standard lighting model, and enable shadows on all light types
         #pragma surface surf Standard fullforwardshadows
@@ -42,11 +42,13 @@ Shader "Custom/NewSurfaceShader"
         {
             // Albedo comes from a texture tinted by color
             fixed4 c = tex2D (_MainTex, IN.uv_MainTex) * _Color;
-            o.Albedo = c.rgb;
+            o.Albedo = c.rgb*0.5;
             // Metallic and smoothness come from slider variables
             o.Metallic = _Metallic;
+            o.Emission = c.rgb*0.5;
             o.Smoothness = _Glossiness;
             o.Alpha = c.a;
+            
         }
         ENDCG
     }
